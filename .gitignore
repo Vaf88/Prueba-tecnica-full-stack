@@ -1,0 +1,68 @@
+# Root ignore for fullstack project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Node modules
+**/node_modules
+
+# Build output
+**/dist
+**/build
+**/public/build
+**/.parcel-cache
+**/.next
+**/.nuxt
+**/.vite
+
+# Environment files
+**/.env
+**/.env.*
+
+# IDE / editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Laravel / PHP
+**/vendor
+**/storage/*.key
+**/.phpunit.cache
+**/.phpunit.result.cache
+**/phpunit.xml
+
+# Cypress / Playwright / Test outputs
+**/cypress/videos/
+**/cypress/screenshots/
+**/playwright-report/
+**/test-results/
+**/__snapshots__/
+
+# Generated files
+*.tsbuildinfo
+
+# Local config files
+*.local
+
+# Public config files
+/public/hot
+/public/storage
+
+# Ignore the nested backend project node modules location
+/backend/backend/node_modules
+/frontend/node_modules
+
+# Ignore generated IDE settings in subprojects if not committed
+/backend/backend/.vscode
+/frontend/.vscode
