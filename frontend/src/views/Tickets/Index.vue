@@ -128,66 +128,114 @@ onMounted(fetchTickets)
 </script>
 
 <style scoped>
-.tickets-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+.tickets-container h1 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 }
 
 .filters {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.filter-input, .filter-select {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.filter-input,
+.filter-select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .create-button {
   display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   text-decoration: none;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .create-button:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 
 .tickets-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.tickets-table th, .tickets-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .tickets-table th {
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-.loading, .error, .no-tickets {
+.tickets-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e8eef5;
+}
+
+.tickets-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.tickets-table tbody tr:hover {
+  background-color: #f8f9fa;
+  box-shadow: inset 0 0 0 1px rgba(102, 126, 234, 0.1);
+}
+
+.loading,
+.error,
+.no-tickets {
   text-align: center;
-  padding: 20px;
-  font-size: 18px;
+  padding: 2rem;
+  font-size: 1.1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .error {
-  color: #dc3545;
+  color: #d32f2f;
+  background-color: #ffebee;
+  border-left: 4px solid #d32f2f;
 }
 
 .no-tickets {
-  color: #6c757d;
+  color: #757575;
+}
+
+.loading {
+  color: #667eea;
+  font-weight: 600;
 }
 </style>

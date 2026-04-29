@@ -44,9 +44,7 @@ import { RouterLink } from 'vue-router'
 
 <style scoped>
 .home-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  width: 100%;
 }
 
 .welcome-section {
