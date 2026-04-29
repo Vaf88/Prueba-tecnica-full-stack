@@ -1,131 +1,158 @@
-# Prueba Técnica - Gestión de Tickets
+# 📄 DOCUMENTACIÓN TÉCNICA -- SISTEMA DE GESTIÓN DE TICKETS
 
-## Descripción
-Implementación de un sistema de gestión de tickets de soporte utilizando Laravel (backend) y Vue.js (frontend), con base de datos SQL Server.
+## 🧾 1. Descripción General
 
-## Estructura del Proyecto
+Este proyecto consiste en una aplicación fullstack para la gestión de
+tickets de soporte técnico.\
+Permite crear, consultar y filtrar tickets asociados a clientes, con una
+arquitectura moderna basada en Laravel (backend) y Vue.js (frontend).\
+El sistema fue desarrollado siguiendo buenas prácticas de validación,
+estructura de código y separación de responsabilidades.
 
-```
-/
-├── backend/          # API REST con Laravel
-├── frontend/         # SPA con Vue.js
-└── README.md
-```
+## 🏗️ 2. Arquitectura
 
-## Tecnologías Utilizadas
-- **Backend**: Laravel 11, PHP 8.4, SQLite (o SQL Server)
-- **Frontend**: Vue.js 3, TypeScript, Vue Router
-- **Base de Datos**: SQLite para desarrollo, SQL Server para producción
+-   Backend: Laravel 11 (API REST)\
+-   Frontend: Vue 3 + Inertia\
+-   Base de datos: SQLite (configurable a SQL Server)\
+-   Autenticación: Laravel Sanctum
 
-## Instalación y Configuración
+Se utiliza un enfoque SPA (Single Page Application) con comunicación
+mediante API.
 
-### Backend (Laravel)
+## ⚙️ 3. Funcionalidades Implementadas
 
-1. Instalar dependencias:
-```bash
-cd backend
-composer install
-```
+### 🔹 Backend (Laravel)
 
-2. Configurar entorno:
-```bash
-cp .env.example .env
-php artisan key:generate
-```
+**Endpoints principales**
 
-3. Configurar base de datos:
-   - Para desarrollo: usar SQLite (ya configurado)
-   - Para producción: cambiar `DB_CONNECTION=sqlsrv` en `.env`
+-   POST /api/tickets\
+    Permite crear tickets con validaciones:
+    -   Título máximo 120 caracteres\
+    -   Descripción obligatoria\
+    -   Prioridad (baja, media, alta)\
+    -   Cliente válido
+-   GET /api/tickets\
+    Permite listar tickets con filtros:
+    -   Por prioridad\
+    -   Por rango de fechas\
+    -   Búsqueda por título
 
-4. Ejecutar migraciones y seeders:
-```bash
-php artisan migrate
-php artisan db:seed
-```
+**Modelo Ticket** - Relación con usuario (cliente)\
+- Uso de fillable\
+- Implementación de HasFactory
 
-5. Iniciar servidor:
-```bash
-php artisan serve --host=0.0.0.0 --port=8000
-```
+**Base de Datos** - Tabla tickets con: - PK y FK\
+- Índices\
+- Timestamps
 
-### Frontend (Vue.js)
+**Seeders** - 5 usuarios\
+- 20 tickets
 
-1. Instalar dependencias:
-```bash
-cd frontend
-npm install
-```
+**Validaciones** - Backend con JSON consistente\
+- Manejo de errores
 
-2. Iniciar servidor de desarrollo:
-```bash
-npm run dev
-```
+**Pruebas** - Validación\
+- Creación\
+- Filtros
 
-3. Abrir navegador en `http://localhost:5173`
+------------------------------------------------------------------------
 
-## Endpoints API
+### 🔹 Frontend (Vue.js)
 
-### Autenticación
-- `POST /api/login` - Iniciar sesión y obtener token
+**Páginas** - /tickets → listado + filtros\
+- /tickets/create → formulario
 
-### Tickets
-- `GET /api/tickets` - Listar tickets con filtros (prioridad, fecha_desde, fecha_hasta, titulo)
-- `POST /api/tickets` - Crear nuevo ticket
+**Componentes** - Layout base\
+- Estados reactivos
 
-### Usuarios
-- `GET /api/users` - Listar usuarios (clientes)
+**Integración API** - Fetch + headers\
+- Manejo de errores
 
-## Funcionalidades Implementadas
+------------------------------------------------------------------------
 
-### Backend
-- ✅ Modelo Ticket con relaciones
-- ✅ Controlador API con validaciones
-- ✅ Migraciones con índices para optimización
-- ✅ Seeders para datos de prueba
-- ✅ Pruebas unitarias y de feature
-- ✅ Autenticación con Sanctum
+## 🗄️ 4. Base de Datos
 
-### Frontend
-- ✅ Página de listado de tickets con filtros
-- ✅ Página de creación de tickets
-- ✅ Estados de carga y manejo de errores
-- ✅ Validaciones básicas en UI
-- ✅ Navegación con Vue Router
+-   Migraciones Laravel\
+-   Índices optimizados\
+-   Configurable vía .env
 
-## Desarrollo
+------------------------------------------------------------------------
 
-### Ejecutar ambos servidores
+## 🧪 5. Calidad del Código
 
-1. Terminal 1 - Backend:
-```bash
-cd backend && php artisan serve --host=0.0.0.0 --port=8000
-```
+-   Código organizado\
+-   Validaciones frontend + backend\
+-   Pruebas (21 assertions)\
+-   Documentación clara
 
-2. Terminal 2 - Frontend:
-```bash
-cd frontend && npm run dev
-```
+------------------------------------------------------------------------
 
-### Acceder a la aplicación
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:8000`
+## 🚀 6. Instrucciones de Ejecución
 
-## Pruebas
-Ejecutar pruebas del backend:
-```bash
-cd backend && php artisan test
-```
+### Ejecución general
 
-## Decisiones Técnicas
-- **Separación clara**: Backend y frontend en carpetas distintas
-- **API First**: Backend como API REST pura
-- **SPA moderna**: Frontend con Vue.js 3 y TypeScript
-- **Base de datos**: SQLite para desarrollo, SQL Server para producción
-- **Autenticación**: Laravel Sanctum para tokens API
-- **Validaciones**: Tanto en backend como frontend
-- **Índices DB**: Para rendimiento en consultas filtradas
+    ./dev.sh
 
-## Notas
-- El frontend consume la API del backend en `http://localhost:8000`
-- Para producción, actualizar las URLs de la API
-- Los datos de prueba incluyen usuarios y tickets de ejemplo
+### Manual
+
+    composer install
+    npm install
+    php artisan migrate
+    php artisan db:seed
+    npm run build
+    php artisan serve
+
+Acceso: - /login\
+- /tickets
+
+------------------------------------------------------------------------
+
+## 📊 7. Consultas BD
+
+    sqlite3 database/database.sqlite
+    .tables
+    .schema users
+    .schema tickets
+
+    SELECT * FROM users LIMIT 20;
+    SELECT * FROM tickets LIMIT 20;
+    SELECT * FROM tickets WHERE prioridad = 'alta';
+
+Consulta directa:
+
+    sqlite3 database/database.sqlite "SELECT * FROM tickets LIMIT 20;"
+
+Tinker:
+
+    php artisan tinker
+
+------------------------------------------------------------------------
+
+## 📁 8. Estructura
+
+/backend\
+/frontend\
+dev.sh\
+README.md
+
+------------------------------------------------------------------------
+
+## 🧠 9. Decisiones Técnicas
+
+-   Laravel + Vue + Inertia\
+-   Sanctum\
+-   Índices en DB\
+-   Validaciones backend\
+-   SQLite para desarrollo
+
+------------------------------------------------------------------------
+
+## ✅ 10. Conclusión
+
+El sistema cumple con los requerimientos:\
+- Gestión de tickets\
+- Filtros\
+- Validaciones\
+- Escalabilidad
+
+Proyecto listo para evaluación.
