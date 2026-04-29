@@ -87,7 +87,13 @@ interface TicketsResponse {
   total: number
 }
 
-const tickets = ref<TicketsResponse>({ data: [] } as TicketsResponse)
+const tickets = ref<TicketsResponse>({
+  data: [],
+  current_page: 1,
+  last_page: 1,
+  per_page: 10,
+  total: 0,
+})
 const loading = ref(false)
 const error = ref('')
 const filters = ref({
@@ -96,6 +102,7 @@ const filters = ref({
   fecha_desde: '',
   fecha_hasta: ''
 })
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? ''
 
 const fetchTickets = async () => {
   loading.value = true
@@ -107,7 +114,7 @@ const fetchTickets = async () => {
     if (filters.value.fecha_desde) params.append('fecha_desde', filters.value.fecha_desde)
     if (filters.value.fecha_hasta) params.append('fecha_hasta', filters.value.fecha_hasta)
 
-    const response = await fetch(`http://localhost:8000/api/tickets?${params}`)
+    const response = await fetch(`${apiBaseUrl}/api/tickets?${params}`)
     if (!response.ok) throw new Error('Error al cargar tickets')
     tickets.value = await response.json()
   } catch (err) {

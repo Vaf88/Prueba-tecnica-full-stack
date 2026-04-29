@@ -98,18 +98,20 @@ const loading = ref(false)
 const success = ref(false)
 const error = ref('')
 const users = ref<User[]>([])
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? ''
 
 const fetchUsers = async () => {
   loading.value = true
   error.value = ''
   try {
-    const response = await fetch('http://localhost:8000/api/users')
+    const response = await fetch(`${apiBaseUrl}/api/users`)
     if (!response.ok) {
       throw new Error('No se pudieron cargar los clientes')
     }
     users.value = await response.json()
-    if (users.value.length) {
-      form.value.cliente_id = users.value[0].id.toString()
+    const firstUser = users.value[0]
+    if (firstUser) {
+      form.value.cliente_id = firstUser.id.toString()
     }
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Error desconocido'
@@ -124,7 +126,7 @@ const submitForm = async () => {
   success.value = false
   errors.value = {}
   try {
-    const response = await fetch('http://localhost:8000/api/tickets', {
+    const response = await fetch(`${apiBaseUrl}/api/tickets`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
